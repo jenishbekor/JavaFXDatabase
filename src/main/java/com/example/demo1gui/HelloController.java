@@ -32,7 +32,7 @@ public class HelloController {
     @FXML
     private DatePicker datepicker;
 
-    TaskData taskData = new TaskData();
+    TaskDAO taskDAO = new TaskDAO();
 
     @FXML
     void onCreate(ActionEvent event) {
@@ -48,7 +48,8 @@ public class HelloController {
         newTask.setId(0);
         newTask.setPriority( prifield.getText());
 
-        newTask = taskData.insertTask(newTask);
+        int newid = taskDAO.insert(newTask);
+        newTask.setId(newid);
         taskidlabel.setText( "" + newTask.getId());
 
     }
