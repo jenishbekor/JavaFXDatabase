@@ -33,7 +33,7 @@ public class TaskController {
 
     TaskService taskService;
 
-    public void setTaskDAO(TaskService taskService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 

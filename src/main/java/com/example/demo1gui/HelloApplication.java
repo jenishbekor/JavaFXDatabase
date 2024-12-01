@@ -14,15 +14,14 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-            Parent root = fxmlLoader.load();
-            TaskController taskController = fxmlLoader.getController();
 
             Connection conn = new PostgreSQLConnection().getConnection();
             TaskDAO taskDAO = new TaskDAO(conn);
             TaskService taskService = new TaskService(taskDAO);
-            taskController.setTaskDAO(taskService);
+            TaskController taskController = new TaskController(taskService);
+            fxmlLoader.setController(taskController);
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();
