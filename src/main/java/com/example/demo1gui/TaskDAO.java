@@ -7,19 +7,8 @@ public class TaskDAO implements DAOInterface<Task>{
 
     private Connection conn;
 
-    public TaskDAO(){
-        String url = "jdbc:postgresql:testdb"; // testdb is a name of localhost database
-        String username = "postgres";
-        String password = "postgres";
-
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-            System.out.println("Database is successfully connected...");
-        }
-        catch(SQLException e){
-            System.out.println(e.toString());
-        }
-
+    public TaskDAO(Connection conn){
+        this.conn = conn;
     }
 
     @Override

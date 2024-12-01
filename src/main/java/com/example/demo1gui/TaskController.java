@@ -2,20 +2,19 @@ package com.example.demo1gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.text.SimpleDateFormat;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class HelloController {
-
-    @FXML
-    private TextField deadlinefield;
+public class TaskController {
 
     @FXML
     private TextField descfield;
@@ -32,7 +31,11 @@ public class HelloController {
     @FXML
     private DatePicker datepicker;
 
-    TaskDAO taskDAO = new TaskDAO();
+    TaskService taskService;
+
+    public void setTaskDAO(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @FXML
     void onCreate(ActionEvent event) {
@@ -48,7 +51,14 @@ public class HelloController {
         newTask.setId(0);
         newTask.setPriority( prifield.getText());
 
-        int newid = taskDAO.insert(newTask);
+        int newid = taskService.insertTask(newTask);
+        if(newid == 0 ){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Deadline must be later than now.");
+            alert.show();
+        }
+
         newTask.setId(newid);
         taskidlabel.setText( "" + newTask.getId());
 
