@@ -13,6 +13,11 @@ public class TaskService {
     public int insertTask(Task task){
         int id = 0;
 
+        if(task.getTaskname().isEmpty() || task.getDescription().isEmpty() || task.getDeadline() == null
+        || task.getPriority().isEmpty()){
+            return -1;
+        }
+
         if( task.getDeadline().after(new Date())) {
             id = taskDAO.insert(task);
         }

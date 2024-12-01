@@ -52,6 +52,13 @@ public class TaskController {
         newTask.setPriority( prifield.getText());
 
         int newid = taskService.insertTask(newTask);
+        if(newid == -1){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("All fields are required.");
+            alert.show();
+        }
+
         if(newid == 0 ){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
